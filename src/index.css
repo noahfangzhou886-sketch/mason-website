@@ -1,0 +1,203 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --color-neon-pink: #ff00ff;
+  --color-neon-yellow: #ffff00;
+  --color-neon-cyan: #00ffff;
+  --color-off-white: #f5f5f0;
+}
+
+@layer base {
+  body {
+    @apply bg-off-white text-black font-sans antialiased overflow-x-hidden font-bold;
+    background-image: 
+      linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+}
+
+@layer components {
+  .chunky-border {
+    border-width: 4px;
+    border-color: black;
+  }
+  
+  .neon-shadow-pink {
+    box-shadow: 8px 8px 0px 0px #ff00ff;
+  }
+  
+  .neon-shadow-yellow {
+    box-shadow: 8px 8px 0px 0px #ffff00;
+  }
+
+  .neon-glow-pink {
+    filter: drop-shadow(0 0 10px #ff00ff);
+  }
+
+  .neon-glow-yellow {
+    filter: drop-shadow(0 0 10px #ffff00);
+  }
+
+  .neon-glow-cyan {
+    filter: drop-shadow(0 0 10px #00ffff);
+  }
+
+  .neon-box-glow-pink:hover {
+    box-shadow: 0 0 20px #ff00ff;
+  }
+
+  .neon-box-glow-cyan:hover {
+    box-shadow: 0 0 20px #00ffff;
+  }
+
+  .neon-box-glow-yellow:hover {
+    box-shadow: 0 0 20px #ffff00;
+  }
+
+  .nav-tab {
+    @apply px-4 py-2 bg-white uppercase font-bold transition-all duration-200 cursor-pointer;
+    border-width: 4px;
+    border-color: black;
+  }
+  
+  .nav-tab:hover {
+    @apply bg-neon-pink text-white;
+  }
+
+  .nav-tab-active {
+    @apply bg-neon-pink text-white -translate-x-1 -translate-y-1;
+    box-shadow: 8px 8px 0px 0px #ff00ff;
+  }
+
+  .card {
+    @apply bg-white p-6 relative transition-all duration-200;
+    border-width: 4px;
+    border-color: black;
+  }
+
+  .btn-pink {
+    @apply bg-neon-pink text-white px-6 py-3 uppercase font-black flex items-center gap-2 transition-all;
+    border-width: 4px;
+    border-color: black;
+  }
+  
+  .btn-pink:hover {
+    @apply -translate-x-1 -translate-y-1;
+    box-shadow: 8px 8px 0px 0px #ff00ff;
+  }
+
+  .btn-white {
+    @apply bg-white text-black px-6 py-3 uppercase font-black flex items-center gap-2 transition-all;
+    border-width: 4px;
+    border-color: black;
+  }
+  
+  .btn-white:hover {
+    @apply -translate-x-1 -translate-y-1;
+    box-shadow: 8px 8px 0px 0px #ffff00;
+  }
+
+  .dark-surface {
+    background-color: #0f172a;
+    color: #f8fafc;
+    border-color: #ffffff;
+    box-shadow: 6px 6px 0px 0px rgba(0, 255, 255, 0.25);
+  }
+
+  .dark-surface-soft {
+    background-color: #1f2937;
+    color: #e5e7eb;
+    border-color: #ffffff;
+  }
+
+  .dark-surface-muted {
+    color: #cbd5e1;
+  }
+}
+
+body.dark-mode footer {
+  background-color: #0f172a;
+  color: #f8fafc;
+  border-color: #ffffff;
+}
+
+body.dark-mode footer .text-black {
+  color: #f8fafc !important;
+}
+
+body.dark-mode footer .text-gray-400 {
+  color: #94a3b8 !important;
+}
+
+@keyframes float {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(10px, 15px) rotate(5deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+.floating-decoration {
+  @apply absolute pointer-events-none opacity-40;
+  animation: float 6s ease-in-out infinite;
+}
+
+.typing-cursor::after {
+  content: '|';
+  @apply ml-1 font-black;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  from, to { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes neon-flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    opacity: 1;
+    text-shadow: 0 0 10px rgba(255, 0, 255, 0.8), 0 0 20px rgba(255, 0, 255, 0.5);
+  }
+  20%, 22%, 24%, 55% {
+    opacity: 0.5;
+    text-shadow: none;
+  }
+}
+
+.animate-neon-flicker {
+  animation: neon-flicker 2s linear infinite;
+}
+
+.animate-neon-flicker-once {
+  animation: neon-flicker 1.5s linear 1;
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes shake {
+  0% { transform: rotateY(180deg) translate(0, 0); }
+  25% { transform: rotateY(180deg) translate(-4px, 4px); }
+  50% { transform: rotateY(180deg) translate(4px, -4px); }
+  75% { transform: rotateY(180deg) translate(-4px, -4px); }
+  100% { transform: rotateY(180deg) translate(4px, 4px); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-shake {
+  animation: shake 0.3s cubic-bezier(.36,.07,.19,.97) infinite;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
