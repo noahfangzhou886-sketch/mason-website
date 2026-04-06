@@ -212,14 +212,17 @@ const Home = ({ setActiveTab }: { setActiveTab: (t: Tab) => void, key?: any }) =
   );
 };
 
-const ImagePlaceholder = ({ label, glowClass = "neon-box-glow-pink" }: { label: string, glowClass?: string }) => (
-  <div className={`w-full aspect-video chunky-border bg-gray-100 flex flex-col items-center justify-center p-4 group/img cursor-pointer transition-all hover:bg-white ${glowClass} mt-4 mb-2`}>
-    <div className="text-[10px] font-black text-gray-400 mb-2 uppercase tracking-tighter">{label}</div>
-    <div className="font-black text-xs uppercase tracking-widest group-hover/img:text-black transition-colors">UPLOAD PROJECT IMAGE</div>
+const ImagePlaceholder = ({ label, glowClass = "neon-box-glow-pink", isDarkMode }: { label: string, glowClass?: string, isDarkMode?: boolean }) => (
+  <div className={`w-full aspect-video chunky-border flex flex-col items-center justify-center p-4 group/img cursor-pointer transition-all ${glowClass} mt-4 mb-2 ${
+    isDarkMode ? 'dark-surface-soft border-white hover:bg-slate-700' : 'bg-gray-100 hover:bg-white'
+  }`}>
+    <div className={`text-[10px] font-black mb-2 uppercase tracking-tighter ${isDarkMode ? 'text-slate-400' : 'text-gray-400'}`}>{label}</div>
+    <div className={`font-black text-xs uppercase tracking-widest transition-colors ${isDarkMode ? 'group-hover/img:text-white text-slate-300' : 'group-hover/img:text-black'}`}>UPLOAD PROJECT IMAGE</div>
   </div>
 );
 
-const Journey = () => {
+const Journey = ({ isDarkMode }: { isDarkMode?: boolean, key?: any }) => {
+  const darkMode = isDarkMode ?? (typeof document !== 'undefined' && document.body.classList.contains('dark-mode'));
   return (
     <motion.div 
       initial={{ opacity: 0 }}
@@ -243,7 +246,7 @@ const Journey = () => {
           <div className="w-full lg:w-[45%]">
             <motion.div 
               whileHover={{ scale: 1.02 }}
-              className="card hover:neon-shadow-cyan border-neon-cyan/50 pt-10"
+              className={`card hover:neon-shadow-cyan border-neon-cyan/50 pt-10 ${darkMode ? 'dark-surface border-white' : ''}`}
             >
               <div className="absolute top-0 left-0 bg-neon-cyan chunky-border px-4 py-1 -translate-y-1/2 translate-x-6 text-xs font-black text-black uppercase">
                 职业阶段：BOSS LEVEL
@@ -253,16 +256,16 @@ const Journey = () => {
                   <h3 className="text-3xl font-black uppercase leading-tight">XYZ Corp.</h3>
                   <div className="text-neon-cyan font-black uppercase text-sm tracking-widest">Lead Product Manager</div>
                 </div>
-                <div className="bg-white chunky-border px-3 py-1 text-xs font-black uppercase">2023.12 - 至今</div>
+                <div className={`chunky-border px-3 py-1 text-xs font-black uppercase ${darkMode ? 'dark-surface-soft border-white' : 'bg-white'}`}>2023.12 - 至今</div>
               </div>
-              <div className="space-y-4 text-gray-700 font-bold">
+              <div className={`space-y-4 font-bold ${darkMode ? 'text-slate-200' : 'text-gray-700'}`}>
                 <p>主导战略规划、深度用户研究及跨职能团队协作，驱动核心业务增长。</p>
                 <div className="bg-black text-neon-cyan chunky-border p-4 text-center">
                   <div className="text-4xl font-black">15% YoY 增长</div>
                   <div className="text-[10px] uppercase tracking-widest mt-1">核心业务数据指标</div>
                 </div>
               </div>
-              <ImagePlaceholder label="[[XYZ_项目_截图/团队合影_IMAGE_PLACEHOLDER]]" glowClass="neon-box-glow-cyan" />
+              <ImagePlaceholder label="[[XYZ_项目_截图/团队合影_IMAGE_PLACEHOLDER]]" glowClass="neon-box-glow-cyan" isDarkMode={darkMode} />
             </motion.div>
           </div>
         </div>
@@ -272,7 +275,7 @@ const Journey = () => {
           <div className="w-full lg:w-[45%]">
             <motion.div 
               whileHover={{ scale: 1.02 }}
-              className="card hover:neon-shadow-pink border-neon-pink/50 pt-10"
+              className={`card hover:neon-shadow-pink border-neon-pink/50 pt-10 ${darkMode ? 'dark-surface border-white' : ''}`}
             >
               <div className="absolute top-0 left-0 bg-neon-pink chunky-border px-4 py-1 -translate-y-1/2 translate-x-6 text-xs font-black text-white uppercase">
                 个人探索：SKILL TREE
@@ -280,15 +283,15 @@ const Journey = () => {
               <h3 className="text-2xl font-black uppercase mb-4">产品策略与用户研究</h3>
               <div className="flex flex-wrap gap-3 mb-6">
                 {['Figma', 'SQL', 'Python', 'Agile'].map(skill => (
-                  <span key={skill} className="bg-white chunky-border px-4 py-1 text-sm font-black uppercase tracking-wider hover:bg-neon-pink hover:text-white transition-all hover:neon-glow-pink cursor-default">
+                  <span key={skill} className={`chunky-border px-4 py-1 text-sm font-black uppercase tracking-wider transition-all hover:neon-glow-pink cursor-default ${darkMode ? 'dark-surface-soft border-white hover:bg-neon-pink hover:text-white' : 'bg-white hover:bg-neon-pink hover:text-white'}`}>
                     {skill}
                   </span>
                 ))}
               </div>
-              <p className="text-gray-600 font-bold text-sm mb-4">
+              <p className={`font-bold text-sm mb-4 ${darkMode ? 'text-slate-300' : 'text-gray-600'}`}>
                 持续构建跨领域的技能树，从设计原型到数据分析，全方位赋能产品决策。
               </p>
-              <ImagePlaceholder label="[[Figma_设计草稿/数据分析_图表_IMAGE_PLACEHOLDER]]" glowClass="neon-box-glow-pink" />
+              <ImagePlaceholder label="[[Figma_设计草稿/数据分析_图表_IMAGE_PLACEHOLDER]]" glowClass="neon-box-glow-pink" isDarkMode={darkMode} />
             </motion.div>
           </div>
         </div>
@@ -298,7 +301,7 @@ const Journey = () => {
           <div className="w-full lg:w-[45%]">
             <motion.div 
               whileHover={{ scale: 1.02 }}
-              className="card hover:neon-shadow-cyan border-neon-cyan/50 pt-10"
+              className={`card hover:neon-shadow-cyan border-neon-cyan/50 pt-10 ${darkMode ? 'dark-surface border-white' : ''}`}
             >
               <div className="absolute top-0 left-0 bg-neon-cyan chunky-border px-4 py-1 -translate-y-1/2 translate-x-6 text-xs font-black text-black uppercase">
                 职业阶段：LEVEL 2
@@ -308,12 +311,12 @@ const Journey = () => {
                   <h3 className="text-3xl font-black uppercase leading-tight">ABC Tech</h3>
                   <div className="text-neon-cyan font-black uppercase text-sm tracking-widest">Senior Product Manager</div>
                 </div>
-                <div className="bg-white chunky-border px-3 py-1 text-xs font-black uppercase">2021.06 - 2023.11</div>
+                <div className={`chunky-border px-3 py-1 text-xs font-black uppercase ${darkMode ? 'dark-surface-soft border-white' : 'bg-white'}`}>2021.06 - 2023.11</div>
               </div>
-              <p className="text-gray-700 font-bold mb-4">
+              <p className={`font-bold mb-4 ${darkMode ? 'text-slate-200' : 'text-gray-700'}`}>
                 专注于平台型产品开发及 B2B 内部效率工具的从零到一构建，优化企业级工作流。
               </p>
-              <ImagePlaceholder label="[[ABC_平台_原型/功能演示图_IMAGE_PLACEHOLDER]]" glowClass="neon-box-glow-cyan" />
+              <ImagePlaceholder label="[[ABC_平台_原型/功能演示图_IMAGE_PLACEHOLDER]]" glowClass="neon-box-glow-cyan" isDarkMode={darkMode} />
             </motion.div>
           </div>
         </div>
@@ -323,30 +326,30 @@ const Journey = () => {
           <div className="w-full lg:w-[45%]">
             <motion.div 
               whileHover={{ scale: 1.02 }}
-              className="card hover:neon-shadow-pink border-neon-pink/50 pt-10"
+              className={`card hover:neon-shadow-pink border-neon-pink/50 pt-10 ${darkMode ? 'dark-surface border-white' : ''}`}
             >
               <div className="absolute top-0 left-0 bg-neon-pink chunky-border px-4 py-1 -translate-y-1/2 translate-x-6 text-xs font-black text-white uppercase">
                 个人探索：PASSION POINTS
               </div>
               <h3 className="text-2xl font-black uppercase mb-6">兴趣支线</h3>
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-white chunky-border p-4 hover:bg-neon-yellow transition-colors group/p">
+                <div className={`chunky-border p-4 transition-colors group/p ${darkMode ? 'dark-surface-soft border-white hover:bg-neon-yellow hover:text-black' : 'bg-white hover:bg-neon-yellow'}`}>
                   <div className="font-black text-sm uppercase mb-2">AI / ML</div>
                   <div className="w-full h-1 bg-black mb-2" />
-                  <div className="text-[10px] font-bold text-gray-500 uppercase">探索前沿技术</div>
+                  <div className={`text-[10px] font-bold uppercase ${darkMode ? 'text-slate-400' : 'text-gray-500'}`}>探索前沿技术</div>
                 </div>
-                <div className="bg-white chunky-border p-4 hover:bg-neon-cyan transition-colors group/p">
+                <div className={`chunky-border p-4 transition-colors group/p ${darkMode ? 'dark-surface-soft border-white hover:bg-neon-cyan hover:text-black' : 'bg-white hover:bg-neon-cyan'}`}>
                   <div className="font-black text-sm uppercase mb-2">网页开发</div>
                   <div className="w-full h-1 bg-black mb-2" />
-                  <div className="text-[10px] font-bold text-gray-500 uppercase">构建数字世界</div>
+                  <div className={`text-[10px] font-bold uppercase ${darkMode ? 'text-slate-400' : 'text-gray-500'}`}>构建数字世界</div>
                 </div>
-                <div className="bg-white chunky-border p-4 hover:bg-neon-pink hover:text-white transition-colors group/p">
+                <div className={`chunky-border p-4 transition-colors group/p ${darkMode ? 'dark-surface-soft border-white hover:bg-neon-pink hover:text-white' : 'bg-white hover:bg-neon-pink hover:text-white'}`}>
                   <div className="font-black text-sm uppercase mb-2">徒步</div>
-                  <ImagePlaceholder label="[[徒步_风光照]]" glowClass="neon-box-glow-pink" />
+                  <ImagePlaceholder label="[[徒步_风光照]]" glowClass="neon-box-glow-pink" isDarkMode={darkMode} />
                 </div>
-                <div className="bg-white chunky-border p-4 hover:bg-neon-yellow transition-colors group/p">
+                <div className={`chunky-border p-4 transition-colors group/p ${darkMode ? 'dark-surface-soft border-white hover:bg-neon-yellow hover:text-black' : 'bg-white hover:bg-neon-yellow'}`}>
                   <div className="font-black text-sm uppercase mb-2">摄影</div>
-                  <ImagePlaceholder label="[[摄影_作品集]]" glowClass="neon-box-glow-yellow" />
+                  <ImagePlaceholder label="[[摄影_作品集]]" glowClass="neon-box-glow-yellow" isDarkMode={darkMode} />
                 </div>
               </div>
             </motion.div>
@@ -358,7 +361,7 @@ const Journey = () => {
           <div className="w-full lg:w-[45%]">
             <motion.div 
               whileHover={{ scale: 1.02 }}
-              className="card hover:neon-shadow-cyan border-neon-cyan/50 pt-10"
+              className={`card hover:neon-shadow-cyan border-neon-cyan/50 pt-10 ${darkMode ? 'dark-surface border-white' : ''}`}
             >
               <div className="absolute top-0 left-0 bg-neon-cyan chunky-border px-4 py-1 -translate-y-1/2 translate-x-6 text-xs font-black text-black uppercase">
                 职业阶段：LEVEL 1
@@ -368,12 +371,12 @@ const Journey = () => {
                   <h3 className="text-3xl font-black uppercase leading-tight">LMN Startups</h3>
                   <div className="text-neon-cyan font-black uppercase text-sm tracking-widest">Associate Product Manager</div>
                 </div>
-                <div className="bg-white chunky-border px-3 py-1 text-xs font-black uppercase">2019.05 - 2021.05</div>
+                <div className={`chunky-border px-3 py-1 text-xs font-black uppercase ${darkMode ? 'dark-surface-soft border-white' : 'bg-white'}`}>2019.05 - 2021.05</div>
               </div>
-              <p className="text-gray-700 font-bold mb-4">
+              <p className={`font-bold mb-4 ${darkMode ? 'text-slate-200' : 'text-gray-700'}`}>
                 参与 0-to-1 产品孵化与早期项目管理，在快速迭代的初创环境中磨炼产品直觉。
               </p>
-              <ImagePlaceholder label="[[LMN_早起项目_Logo/发布会照片_IMAGE_PLACEHOLDER]]" glowClass="neon-box-glow-cyan" />
+              <ImagePlaceholder label="[[LMN_早起项目_Logo/发布会照片_IMAGE_PLACEHOLDER]]" glowClass="neon-box-glow-cyan" isDarkMode={darkMode} />
             </motion.div>
           </div>
         </div>
@@ -383,7 +386,7 @@ const Journey = () => {
           <div className="w-full lg:w-[45%]">
             <motion.div 
               whileHover={{ scale: 1.02 }}
-              className="card hover:neon-shadow-yellow border-neon-yellow/50 pt-10"
+              className={`card hover:neon-shadow-yellow border-neon-yellow/50 pt-10 ${darkMode ? 'dark-surface border-white' : ''}`}
             >
               <div className="absolute top-0 left-0 bg-neon-yellow chunky-border px-4 py-1 -translate-y-1/2 translate-x-6 text-xs font-black text-black uppercase">
                 成就解锁：ACHIEVEMENT UNLOCKED
@@ -393,12 +396,12 @@ const Journey = () => {
                   <h3 className="text-2xl font-black uppercase leading-tight">PQR University</h3>
                   <div className="text-neon-pink font-black uppercase text-xs tracking-widest mt-1">Computer Science & Psychology</div>
                 </div>
-                <div className="bg-white chunky-border px-3 py-1 text-xs font-black uppercase">2015 - 2019</div>
+                <div className={`chunky-border px-3 py-1 text-xs font-black uppercase ${darkMode ? 'dark-surface-soft border-white' : 'bg-white'}`}>2015 - 2019</div>
               </div>
-              <p className="text-gray-700 font-bold mb-4">
+              <p className={`font-bold mb-4 ${darkMode ? 'text-slate-200' : 'text-gray-700'}`}>
                 跨学科探索用户行为分析与计算机科学基础，构建技术与心理学的双重视角。
               </p>
-              <ImagePlaceholder label="[[PQR_大学_毕业照/校园地标_IMAGE_PLACEHOLDER]]" glowClass="neon-box-glow-yellow" />
+              <ImagePlaceholder label="[[PQR_大学_毕业照/校园地标_IMAGE_PLACEHOLDER]]" glowClass="neon-box-glow-yellow" isDarkMode={darkMode} />
             </motion.div>
           </div>
         </div>
@@ -661,6 +664,7 @@ const TypingFooter = () => {
 const PhotoCard = ({ card, i, isDarkMode }: { card: any, i: number, isDarkMode?: boolean, key?: any }) => {
   const darkMode = isDarkMode ?? (typeof document !== 'undefined' && document.body.classList.contains('dark-mode'));
   const [isHovered, setIsHovered] = useState(false);
+  const imageSrc = card.image;
   
   return (
     <motion.div
@@ -693,14 +697,19 @@ const PhotoCard = ({ card, i, isDarkMode }: { card: any, i: number, isDarkMode?:
         </div>
         <div className="w-4 h-4 bg-neon-yellow rounded-full border-2 border-black" />
       </div>
-      <div className={`aspect-[4/3] border-[4px] flex items-center justify-center relative overflow-hidden ${
-        darkMode ? 'dark-surface-soft border-white' : 'bg-gray-100 border-black'
-      }`}>
-        <div className={`text-[10px] font-black text-center uppercase p-4 z-10 leading-tight ${darkMode ? 'text-slate-400' : 'text-gray-400'}`}>
+      <div className={`border-[4px] relative overflow-hidden ${imageSrc ? '' : 'aspect-[4/3] flex items-center justify-center'} ${darkMode ? 'dark-surface-soft border-white' : 'bg-gray-100 border-black'}`}>
+        <div className={`text-[10px] font-black text-center uppercase p-4 z-10 leading-tight ${imageSrc ? 'hidden' : ''} ${darkMode ? 'text-slate-400' : 'text-gray-400'}`}>
           [[生活照占位符: {card.label}]]
           {card.desc && <div className={`mt-2 text-[8px] normal-case ${darkMode ? 'text-slate-500' : 'text-gray-500'}`}>{card.desc}</div>}
         </div>
-        <div className="absolute inset-0 bg-neon-pink/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+        {imageSrc && (
+          <img
+            src={imageSrc}
+            alt={card.label}
+            className="block w-full h-auto relative z-10"
+          />
+        )}
+        <div className="absolute inset-0 bg-neon-pink/5 opacity-0 group-hover:opacity-100 transition-opacity z-20" />
         <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-12 h-4 bg-neon-cyan/40 border border-black/20 -rotate-2" />
       </div>
       <div className="mt-3 flex justify-between items-center">
@@ -713,6 +722,14 @@ const PhotoCard = ({ card, i, isDarkMode }: { card: any, i: number, isDarkMode?:
 
 const AboutMe = ({ isDarkMode }: { isDarkMode?: boolean, key?: any }) => {
   const darkMode = isDarkMode ?? (typeof document !== 'undefined' && document.body.classList.contains('dark-mode'));
+  const photoCardImages: Record<string, string> = {
+    "HIKING TRAIL": "/huge smile.jpg",
+    "CODE SESSIONS": "/office.jpg",
+    "CREATIVE SPARK": "/price.jpg",
+    "MOMENT OF CALM": "/color.jpg",
+    "VISIONARY ENGINEER // 鏁版嵁鍒嗘瀽": "/house.jpg",
+    "ZS MEMORIAL // 涓汉鍗拌": "/water wall.jpg",
+  };
   const photoCards = [
     { tag: "HIKING TRAIL", label: "山顶俯瞰", rotation: -8, zIndex: 10, top: "5%", left: "5%" },
     { tag: "CODE SESSIONS", label: "深夜代码", rotation: 6, zIndex: 20, top: "12%", left: "30%" },
@@ -807,7 +824,7 @@ const AboutMe = ({ isDarkMode }: { isDarkMode?: boolean, key?: any }) => {
           
           <div className="relative w-full h-full">
             {photoCards.map((card, i) => (
-              <PhotoCard key={i} card={card} i={i} isDarkMode={darkMode} />
+              <PhotoCard key={i} card={{ ...card, image: photoCardImages[card.tag] }} i={i} isDarkMode={darkMode} />
             ))}
 
             {/* Floating Compass Accent */}
@@ -853,15 +870,15 @@ export default function App() {
         <main className="flex-grow max-w-7xl mx-auto w-full px-4">
             <AnimatePresence mode="wait">
               {activeTab === '首页' && <Home key="home" setActiveTab={setActiveTab} />}
-              {activeTab === '我的经历' && <Journey key="journey" />}
-              {activeTab === '生活碎片' && <LifeSplinters key="splinters" />}
-              {activeTab === '关于我' && <AboutMe key="about" />}
+              {activeTab === '我的经历' && <Journey key="journey" isDarkMode={isDarkMode} />}
+              {activeTab === '生活碎片' && <LifeSplinters key="splinters" isDarkMode={isDarkMode} />}
+              {activeTab === '关于我' && <AboutMe key="about" isDarkMode={isDarkMode} />}
             </AnimatePresence>
         </main>
         
-        <footer className="border-t-4 border-black bg-white py-10 px-4 mt-12 relative overflow-hidden">
+        <footer className={`border-t-4 py-10 px-4 mt-12 relative overflow-hidden ${isDarkMode ? 'dark-surface border-white' : 'border-black bg-white'}`}>
           <div className="max-w-7xl mx-auto text-center">
-            <div className="text-xl md:text-3xl font-black uppercase tracking-widest text-black neon-glow-pink">
+            <div className={`text-xl md:text-3xl font-black uppercase tracking-widest neon-glow-pink ${isDarkMode ? 'text-white' : 'text-black'}`}>
               探索・创造・无限可能 // <span className="text-neon-pink">DISCOVER. CREATE. INSPIRE.</span>
             </div>
             <div className="mt-6 flex flex-wrap justify-center gap-4">
