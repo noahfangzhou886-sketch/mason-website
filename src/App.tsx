@@ -164,7 +164,7 @@ const Home = ({ setActiveTab, isDarkMode }: { setActiveTab: (t: Tab) => void, is
             <div className="w-full h-full relative transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] group-hover:animate-shake">
               {/* Front Side */}
               <div className="absolute inset-0 [backface-visibility:hidden] flex flex-col items-center justify-center p-4 bg-white">
-                <img src={frontImage} alt="Hero Visual 01" className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300" />
+                <img src={frontImage} alt="Hero Visual 01" className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300" loading="eager" decoding="async" fetchPriority="high" />
                 <div className="absolute top-6 right-6 bg-black text-white px-4 py-1 text-xs font-black uppercase z-10 tracking-widest">
                   HERO_VISUAL // 01
                 </div>
@@ -176,7 +176,7 @@ const Home = ({ setActiveTab, isDarkMode }: { setActiveTab: (t: Tab) => void, is
 
               {/* Back Side */}
               <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] flex flex-col items-center justify-center bg-white">
-                <img src="/ocean.jpg" alt="Hero Visual 02" className="absolute inset-0 w-full h-full object-cover group-hover:scale-115 transition-transform duration-700 ease-in-out" />
+                <img src="/ocean.jpg" alt="Hero Visual 02" className="absolute inset-0 w-full h-full object-cover group-hover:scale-115 transition-transform duration-700 ease-in-out" loading="lazy" decoding="async" />
                 <div className="absolute bottom-6 left-6 bg-neon-pink text-white px-4 py-1 text-xs font-black uppercase z-10 tracking-widest">
                   REVEALED // 02
                 </div>
@@ -241,7 +241,7 @@ const JourneyImageFrame = ({
     className={`w-full ${aspectClass} chunky-border overflow-hidden ${glowClass} mt-4 mb-2 bg-white cursor-zoom-in`}
     onClick={onClick}
   >
-    <img src={imageSrc} alt={label} className="w-full h-full object-cover" />
+    <img src={imageSrc} alt={label} className="w-full h-full object-cover" loading="lazy" decoding="async" />
   </div>
 );
 
@@ -601,7 +601,7 @@ const LifeSplinters = ({ isDarkMode }: { isDarkMode?: boolean, key?: any }) => {
               onClick={() => item.image && setSelectedImage(item.image)}
             >
               {item.image ? (
-                <img src={item.image} alt={item.title} className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500" />
+                <img src={item.image} alt={item.title} className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500" loading="lazy" decoding="async" />
               ) : (
                 <div className={`text-[10px] font-black text-center uppercase p-4 z-10 leading-tight ${darkMode ? 'text-slate-400' : 'text-gray-400'}`}>
                   [[MOMENT_CAPTURE // 4:3 PHOTO // IMAGE_PLACEHOLDER]]
@@ -683,10 +683,12 @@ const LifeSplinters = ({ isDarkMode }: { isDarkMode?: boolean, key?: any }) => {
               <div className={`p-2 border-[4px] shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] w-full flex items-center justify-center ${
                 darkMode ? 'dark-surface border-white' : 'bg-white border-black'
               }`}>
-                <img 
+                <img
                   src={selectedImage} 
                   alt="Enlarged view" 
                   className="max-w-full max-h-[80vh] object-contain"
+                  loading="eager"
+                  decoding="async"
                 />
               </div>
             </motion.div>
