@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Home as HomeIcon, 
@@ -66,7 +66,7 @@ const Navbar = ({ activeTab, setActiveTab, isDarkMode, setIsDarkMode }: { active
         
         <div className="hidden lg:flex items-center gap-3">
           <div className={`chunky-border px-3 py-1 hover:bg-neon-yellow transition-colors cursor-pointer font-black text-sm flex items-center justify-center min-w-[40px] min-h-[40px] ${isDarkMode ? 'bg-black text-white border-white' : 'bg-white text-black'}`}>
-            EN
+            CH
           </div>
           <div 
             onClick={() => setIsDarkMode(!isDarkMode)}
@@ -80,8 +80,9 @@ const Navbar = ({ activeTab, setActiveTab, isDarkMode, setIsDarkMode }: { active
   );
 };
 
-const Home = ({ setActiveTab }: { setActiveTab: (t: Tab) => void, key?: any }) => {
+const Home = ({ setActiveTab, isDarkMode }: { setActiveTab: (t: Tab) => void, isDarkMode?: boolean, key?: any }) => {
   const [frontImage, setFrontImage] = useState("/ocean2.jpg");
+  const darkMode = isDarkMode ?? (typeof document !== 'undefined' && document.body.classList.contains('dark-mode'));
 
   const handleMouseLeave = () => {
     // We change the front image after the card has started flipping back
@@ -144,7 +145,9 @@ const Home = ({ setActiveTab }: { setActiveTab: (t: Tab) => void, key?: any }) =
               <div 
                 key={i} 
                 title={social.label}
-                className={`w-14 h-14 bg-white chunky-border flex items-center justify-center cursor-pointer transition-all shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 ${social.color}`}
+                className={`w-14 h-14 chunky-border flex items-center justify-center cursor-pointer transition-all shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-1 ${
+                  darkMode ? 'bg-slate-900 border-white text-white' : 'bg-white text-black'
+                } ${social.color}`}
               >
                 <social.icon size={28} />
               </div>
@@ -221,8 +224,39 @@ const ImagePlaceholder = ({ label, glowClass = "neon-box-glow-pink", isDarkMode 
   </div>
 );
 
+const JourneyImageFrame = ({
+  label,
+  imageSrc,
+  glowClass = "neon-box-glow-pink",
+  aspectClass = "aspect-[4/3]",
+  onClick,
+}: {
+  label: string,
+  imageSrc: string,
+  glowClass?: string,
+  aspectClass?: string,
+  onClick?: () => void
+}) => (
+  <div
+    className={`w-full ${aspectClass} chunky-border overflow-hidden ${glowClass} mt-4 mb-2 bg-white cursor-zoom-in`}
+    onClick={onClick}
+  >
+    <img src={imageSrc} alt={label} className="w-full h-full object-cover" />
+  </div>
+);
+
 const Journey = ({ isDarkMode }: { isDarkMode?: boolean, key?: any }) => {
   const darkMode = isDarkMode ?? (typeof document !== 'undefined' && document.body.classList.contains('dark-mode'));
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const journeyImages = [
+    "/practice.jpg",
+    "/mls.jpg",
+    "/shixi.jpg",
+    "/hiking.jpg",
+    "/Photo collection.jpg",
+    "/xcb.jpg",
+    "/university.jpg",
+  ];
   return (
     <motion.div 
       initial={{ opacity: 0 }}
@@ -232,8 +266,8 @@ const Journey = ({ isDarkMode }: { isDarkMode?: boolean, key?: any }) => {
     >
       <div className="text-center mb-20">
         <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter mb-4">THE EPIC QUEST</h2>
-        <div className="inline-block bg-neon-yellow chunky-border px-6 py-2 rotate-1">
-          <span className="font-black uppercase tracking-widest">我的职业与探索进化史</span>
+        <div className="inline-block bg-neon-pink chunky-border px-6 py-2 rotate-1">
+          <span className="font-black uppercase tracking-widest">地球online Personal progress</span>
         </div>
       </div>
 
@@ -249,23 +283,23 @@ const Journey = ({ isDarkMode }: { isDarkMode?: boolean, key?: any }) => {
               className={`card hover:neon-shadow-cyan border-neon-cyan/50 pt-10 ${darkMode ? 'dark-surface border-white' : ''}`}
             >
               <div className="absolute top-0 left-0 bg-neon-cyan chunky-border px-4 py-1 -translate-y-1/2 translate-x-6 text-xs font-black text-black uppercase">
-                职业阶段：BOSS LEVEL
+                基层实践
               </div>
               <div className="flex justify-between items-start mb-4">
                 <div>
-                  <h3 className="text-3xl font-black uppercase leading-tight">XYZ Corp.</h3>
-                  <div className="text-neon-cyan font-black uppercase text-sm tracking-widest">Lead Product Manager</div>
+                  <h3 className="text-3xl font-black uppercase leading-tight">红旅文化探索</h3>
+                  <div className="text-neon-cyan font-black uppercase text-sm tracking-widest">Cultural exploration</div>
                 </div>
-                <div className={`chunky-border px-3 py-1 text-xs font-black uppercase ${darkMode ? 'dark-surface-soft border-white' : 'bg-white'}`}>2023.12 - 至今</div>
+                <div className={`chunky-border px-3 py-1 text-xs font-black uppercase ${darkMode ? 'dark-surface-soft border-white' : 'bg-white'}`}>2024.7 - 2024.8</div>
               </div>
               <div className={`space-y-4 font-bold ${darkMode ? 'text-slate-200' : 'text-gray-700'}`}>
-                <p>主导战略规划、深度用户研究及跨职能团队协作，驱动核心业务增长。</p>
+                <p>作为第一负责人，牵头“三下乡”基层实践活动全流程。</p>
                 <div className="bg-black text-neon-cyan chunky-border p-4 text-center">
-                  <div className="text-4xl font-black">15% YoY 增长</div>
-                  <div className="text-[10px] uppercase tracking-widest mt-1">核心业务数据指标</div>
+                  <div className="text-4xl font-black">校级三等奖</div>
+                  <div className="text-[10px] uppercase tracking-widest mt-1">“三下乡”社会实践活动</div>
                 </div>
               </div>
-              <ImagePlaceholder label="[[XYZ_项目_截图/团队合影_IMAGE_PLACEHOLDER]]" glowClass="neon-box-glow-cyan" isDarkMode={darkMode} />
+              <JourneyImageFrame label="[[XYZ_项目_截图/团队合影_IMAGE_PLACEHOLDER]]" glowClass="neon-box-glow-cyan" imageSrc={journeyImages[0]} onClick={() => setSelectedImage(journeyImages[0])} />
             </motion.div>
           </div>
         </div>
@@ -278,20 +312,20 @@ const Journey = ({ isDarkMode }: { isDarkMode?: boolean, key?: any }) => {
               className={`card hover:neon-shadow-pink border-neon-pink/50 pt-10 ${darkMode ? 'dark-surface border-white' : ''}`}
             >
               <div className="absolute top-0 left-0 bg-neon-pink chunky-border px-4 py-1 -translate-y-1/2 translate-x-6 text-xs font-black text-white uppercase">
-                个人探索：SKILL TREE
+                跑马日记
               </div>
-              <h3 className="text-2xl font-black uppercase mb-4">产品策略与用户研究</h3>
+              <h3 className="text-2xl font-black uppercase mb-4">别让脚步停下来</h3>
               <div className="flex flex-wrap gap-3 mb-6">
-                {['Figma', 'SQL', 'Python', 'Agile'].map(skill => (
+                {['Persistence',  'Freedom', 'Vitality'].map(skill => (
                   <span key={skill} className={`chunky-border px-4 py-1 text-sm font-black uppercase tracking-wider transition-all hover:neon-glow-pink cursor-default ${darkMode ? 'dark-surface-soft border-white hover:bg-neon-pink hover:text-white' : 'bg-white hover:bg-neon-pink hover:text-white'}`}>
                     {skill}
                   </span>
                 ))}
               </div>
               <p className={`font-bold text-sm mb-4 ${darkMode ? 'text-slate-300' : 'text-gray-600'}`}>
-                持续构建跨领域的技能树，从设计原型到数据分析，全方位赋能产品决策。
+                跑步是灵魂的释放，是自由的呼吸。
               </p>
-              <ImagePlaceholder label="[[Figma_设计草稿/数据分析_图表_IMAGE_PLACEHOLDER]]" glowClass="neon-box-glow-pink" isDarkMode={darkMode} />
+              <JourneyImageFrame label="[[Figma_设计草稿/数据分析_图表_IMAGE_PLACEHOLDER]]" glowClass="neon-box-glow-pink" imageSrc={journeyImages[1]} onClick={() => setSelectedImage(journeyImages[1])} />
             </motion.div>
           </div>
         </div>
@@ -304,19 +338,19 @@ const Journey = ({ isDarkMode }: { isDarkMode?: boolean, key?: any }) => {
               className={`card hover:neon-shadow-cyan border-neon-cyan/50 pt-10 ${darkMode ? 'dark-surface border-white' : ''}`}
             >
               <div className="absolute top-0 left-0 bg-neon-cyan chunky-border px-4 py-1 -translate-y-1/2 translate-x-6 text-xs font-black text-black uppercase">
-                职业阶段：LEVEL 2
+                实习实训
               </div>
               <div className="flex justify-between items-start mb-4">
                 <div>
-                  <h3 className="text-3xl font-black uppercase leading-tight">ABC Tech</h3>
-                  <div className="text-neon-cyan font-black uppercase text-sm tracking-widest">Senior Product Manager</div>
+                  <h3 className="text-3xl font-black uppercase leading-tight">复合型人才loading...</h3>
+                  <div className="text-neon-cyan font-black uppercase text-sm tracking-widest">密山市市监局 办公室助理的日子</div>
                 </div>
-                <div className={`chunky-border px-3 py-1 text-xs font-black uppercase ${darkMode ? 'dark-surface-soft border-white' : 'bg-white'}`}>2021.06 - 2023.11</div>
+                <div className={`chunky-border px-3 py-1 text-xs font-black uppercase ${darkMode ? 'dark-surface-soft border-white' : 'bg-white'}`}>2024.07 - 2024.8</div>
               </div>
               <p className={`font-bold mb-4 ${darkMode ? 'text-slate-200' : 'text-gray-700'}`}>
-                专注于平台型产品开发及 B2B 内部效率工具的从零到一构建，优化企业级工作流。
+              负责文档上传归档、文件报送，物品采买等跨部门协同工作。
               </p>
-              <ImagePlaceholder label="[[ABC_平台_原型/功能演示图_IMAGE_PLACEHOLDER]]" glowClass="neon-box-glow-cyan" isDarkMode={darkMode} />
+              <JourneyImageFrame label="[[ABC_平台_原型/功能演示图_IMAGE_PLACEHOLDER]]" glowClass="neon-box-glow-cyan" imageSrc={journeyImages[2]} onClick={() => setSelectedImage(journeyImages[2])} />
             </motion.div>
           </div>
         </div>
@@ -334,22 +368,22 @@ const Journey = ({ isDarkMode }: { isDarkMode?: boolean, key?: any }) => {
               <h3 className="text-2xl font-black uppercase mb-6">兴趣支线</h3>
               <div className="grid grid-cols-2 gap-4">
                 <div className={`chunky-border p-4 transition-colors group/p ${darkMode ? 'dark-surface-soft border-white hover:bg-neon-yellow hover:text-black' : 'bg-white hover:bg-neon-yellow'}`}>
-                  <div className="font-black text-sm uppercase mb-2">AI / ML</div>
+                  <div className="font-black text-sm uppercase mb-2">AI / LLM探索</div>
                   <div className="w-full h-1 bg-black mb-2" />
-                  <div className={`text-[10px] font-bold uppercase ${darkMode ? 'text-slate-400' : 'text-gray-500'}`}>探索前沿技术</div>
+                  <div className={`text-[10px] font-bold uppercase ${darkMode ? 'text-slate-400' : 'text-gray-500'}`}>RAG\MCP\AGENT SKILLS</div>
                 </div>
                 <div className={`chunky-border p-4 transition-colors group/p ${darkMode ? 'dark-surface-soft border-white hover:bg-neon-cyan hover:text-black' : 'bg-white hover:bg-neon-cyan'}`}>
-                  <div className="font-black text-sm uppercase mb-2">网页开发</div>
+                  <div className="font-black text-sm uppercase mb-2">vibe coding 前端开发</div>
                   <div className="w-full h-1 bg-black mb-2" />
-                  <div className={`text-[10px] font-bold uppercase ${darkMode ? 'text-slate-400' : 'text-gray-500'}`}>构建数字世界</div>
+                  <div className={`text-[10px] font-bold uppercase ${darkMode ? 'text-slate-400' : 'text-gray-500'}`}>奇思妙想现实化</div>
                 </div>
                 <div className={`chunky-border p-4 transition-colors group/p ${darkMode ? 'dark-surface-soft border-white hover:bg-neon-pink hover:text-white' : 'bg-white hover:bg-neon-pink hover:text-white'}`}>
-                  <div className="font-black text-sm uppercase mb-2">徒步</div>
-                  <ImagePlaceholder label="[[徒步_风光照]]" glowClass="neon-box-glow-pink" isDarkMode={darkMode} />
+                  <div className="font-black text-sm uppercase mb-2">登山（已爬华、嵩、黄、庐版）</div>
+                  <JourneyImageFrame label="[[徒步_风光照]]" glowClass="neon-box-glow-pink" imageSrc={journeyImages[3]} onClick={() => setSelectedImage(journeyImages[3])} />
                 </div>
                 <div className={`chunky-border p-4 transition-colors group/p ${darkMode ? 'dark-surface-soft border-white hover:bg-neon-yellow hover:text-black' : 'bg-white hover:bg-neon-yellow'}`}>
                   <div className="font-black text-sm uppercase mb-2">摄影</div>
-                  <ImagePlaceholder label="[[摄影_作品集]]" glowClass="neon-box-glow-yellow" isDarkMode={darkMode} />
+                  <JourneyImageFrame label="[[摄影_作品集]]" glowClass="neon-box-glow-yellow" imageSrc={journeyImages[4]} onClick={() => setSelectedImage(journeyImages[4])} />
                 </div>
               </div>
             </motion.div>
@@ -364,19 +398,19 @@ const Journey = ({ isDarkMode }: { isDarkMode?: boolean, key?: any }) => {
               className={`card hover:neon-shadow-cyan border-neon-cyan/50 pt-10 ${darkMode ? 'dark-surface border-white' : ''}`}
             >
               <div className="absolute top-0 left-0 bg-neon-cyan chunky-border px-4 py-1 -translate-y-1/2 translate-x-6 text-xs font-black text-black uppercase">
-                职业阶段：LEVEL 1
+                团委大喇叭
               </div>
               <div className="flex justify-between items-start mb-4">
                 <div>
-                  <h3 className="text-3xl font-black uppercase leading-tight">LMN Startups</h3>
-                  <div className="text-neon-cyan font-black uppercase text-sm tracking-widest">Associate Product Manager</div>
+                  <h3 className="text-3xl font-black uppercase leading-tight">宣你所想 传你所爱</h3>
+                  <div className="text-neon-cyan font-black uppercase text-sm tracking-widest">Propaganda Department</div>
                 </div>
-                <div className={`chunky-border px-3 py-1 text-xs font-black uppercase ${darkMode ? 'dark-surface-soft border-white' : 'bg-white'}`}>2019.05 - 2021.05</div>
+                <div className={`chunky-border px-3 py-1 text-xs font-black uppercase ${darkMode ? 'dark-surface-soft border-white' : 'bg-white'}`}>2023.10 - 2024.10</div>
               </div>
               <p className={`font-bold mb-4 ${darkMode ? 'text-slate-200' : 'text-gray-700'}`}>
-                参与 0-to-1 产品孵化与早期项目管理，在快速迭代的初创环境中磨炼产品直觉。
+              宣传部是我在学校的家。
               </p>
-              <ImagePlaceholder label="[[LMN_早起项目_Logo/发布会照片_IMAGE_PLACEHOLDER]]" glowClass="neon-box-glow-cyan" isDarkMode={darkMode} />
+              <JourneyImageFrame label="[[LMN_早起项目_Logo/发布会照片_IMAGE_PLACEHOLDER]]" glowClass="neon-box-glow-cyan" aspectClass="aspect-video" imageSrc={journeyImages[5]} onClick={() => setSelectedImage(journeyImages[5])} />
             </motion.div>
           </div>
         </div>
@@ -389,23 +423,63 @@ const Journey = ({ isDarkMode }: { isDarkMode?: boolean, key?: any }) => {
               className={`card hover:neon-shadow-yellow border-neon-yellow/50 pt-10 ${darkMode ? 'dark-surface border-white' : ''}`}
             >
               <div className="absolute top-0 left-0 bg-neon-yellow chunky-border px-4 py-1 -translate-y-1/2 translate-x-6 text-xs font-black text-black uppercase">
-                成就解锁：ACHIEVEMENT UNLOCKED
+                成就解锁：大学生活启航 0 %
               </div>
               <div className="flex justify-between items-start mb-4">
                 <div>
-                  <h3 className="text-2xl font-black uppercase leading-tight">PQR University</h3>
-                  <div className="text-neon-pink font-black uppercase text-xs tracking-widest mt-1">Computer Science & Psychology</div>
+                  <h3 className="text-2xl font-black uppercase leading-tight">梦开始的地方...</h3>
+                  <div className="text-neon-pink font-black uppercase text-xs tracking-widest mt-1">A new beginning</div>
                 </div>
-                <div className={`chunky-border px-3 py-1 text-xs font-black uppercase ${darkMode ? 'dark-surface-soft border-white' : 'bg-white'}`}>2015 - 2019</div>
+                <div className={`chunky-border px-3 py-1 text-xs font-black uppercase ${darkMode ? 'dark-surface-soft border-white' : 'bg-white'}`}>2022.09</div>
               </div>
               <p className={`font-bold mb-4 ${darkMode ? 'text-slate-200' : 'text-gray-700'}`}>
-                跨学科探索用户行为分析与计算机科学基础，构建技术与心理学的双重视角。
+              你好同学，欢迎来到东北财经大学。
               </p>
-              <ImagePlaceholder label="[[PQR_大学_毕业照/校园地标_IMAGE_PLACEHOLDER]]" glowClass="neon-box-glow-yellow" isDarkMode={darkMode} />
+              <JourneyImageFrame label="[[PQR_大学_毕业照/校园地标_IMAGE_PLACEHOLDER]]" glowClass="neon-box-glow-yellow" imageSrc={journeyImages[6]} onClick={() => setSelectedImage(journeyImages[6])} />
             </motion.div>
           </div>
         </div>
       </div>
+
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm cursor-zoom-out"
+            onClick={() => setSelectedImage(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="relative max-w-5xl w-full max-h-[90vh] flex items-center justify-center cursor-default"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={() => setSelectedImage(null)}
+                className={`absolute -top-12 right-0 w-10 h-10 bg-neon-pink text-white font-black border-[3px] flex items-center justify-center transition-colors z-10 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] ${
+                  darkMode ? 'border-white hover:bg-[#0f172a] hover:text-white' : 'border-black hover:bg-white hover:text-black'
+                }`}
+              >
+                X
+              </button>
+
+              <div className={`chunky-border shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] overflow-hidden ${
+                darkMode ? 'dark-surface border-white' : 'bg-white border-black'
+              }`}>
+                <img
+                  src={selectedImage}
+                  alt="Enlarged view"
+                  className="max-w-full max-h-[80vh] object-contain"
+                />
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 };
@@ -415,7 +489,7 @@ const LifeSplinters = ({ isDarkMode }: { isDarkMode?: boolean, key?: any }) => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const splinters = [
-    { tag: "LEVEL UP", title: "PQR大学毕业", desc: "Level 4 计算机与心理学达成，回忆满载。", time: "2026.04.05 // 10:30 AM" },
+    { tag: "LEVEL UP", title: "大学毕业 waiting", desc: "Level 4 学士成就达成，回忆满载。", time: "2026.06.20 // 10:30 AM" },
     { 
       tag: "EXPLORE", 
       title: "萌妹驼", 
@@ -567,11 +641,11 @@ const LifeSplinters = ({ isDarkMode }: { isDarkMode?: boolean, key?: any }) => {
         }`}>
           <div className="flex flex-col md:flex-row items-center justify-center gap-6">
             <span className="text-3xl md:text-4xl font-black uppercase tracking-widest">
-              探索・创造・无限可能
+              积蓄星火  以待磅礴
             </span>
             <span className="hidden md:block text-neon-pink font-black text-3xl">//</span>
             <span className="text-2xl md:text-3xl font-black text-neon-pink uppercase tracking-tighter neon-glow-pink">
-              DISCOVER. CREATE. INSPIRE.
+              Young at heart.
             </span>
           </div>
         </div>
@@ -625,7 +699,7 @@ const LifeSplinters = ({ isDarkMode }: { isDarkMode?: boolean, key?: any }) => {
 
 const TypingFooter = () => {
   const [text, setText] = useState("");
-  const fullText = "我不是无所不能  但一定竭尽所能";
+  const fullText = "去想全是问题  去做全是答案";
   const [isTyping, setIsTyping] = useState(false);
 
   const startTyping = () => {
@@ -654,8 +728,8 @@ const TypingFooter = () => {
           {text || "我不是无所不能  但一定竭尽所能"}
         </span>
       </div>
-      <div className="absolute top-0 right-0 bg-black text-white chunky-border px-4 py-1 text-[10px] font-black uppercase -translate-y-1/2 translate-x-4">
-        ACTION_LOG // TYPEWRITER
+      <div className="absolute top-2 right-2 bg-black text-white chunky-border px-4 py-1 text-[10px] font-black uppercase">
+        Youth Knows No Limits
       </div>
     </div>
   );
@@ -723,30 +797,30 @@ const PhotoCard = ({ card, i, isDarkMode }: { card: any, i: number, isDarkMode?:
 const AboutMe = ({ isDarkMode }: { isDarkMode?: boolean, key?: any }) => {
   const darkMode = isDarkMode ?? (typeof document !== 'undefined' && document.body.classList.contains('dark-mode'));
   const photoCardImages: Record<string, string> = {
-    "HIKING TRAIL": "/huge smile.jpg",
-    "CODE SESSIONS": "/office.jpg",
-    "CREATIVE SPARK": "/price.jpg",
+    "Youthful spirit": "/huge smile.jpg",
+    "Office day": "/office.jpg",
+    "Honor moment": "/price.jpg",
     "MOMENT OF CALM": "/color.jpg",
-    "VISIONARY ENGINEER // 鏁版嵁鍒嗘瀽": "/house.jpg",
-    "ZS MEMORIAL // 涓汉鍗拌": "/water wall.jpg",
+    "Natural beauty": "/house.jpg",
+    "be water": "/water wall.jpg",
   };
   const photoCards = [
-    { tag: "HIKING TRAIL", label: "山顶俯瞰", rotation: -8, zIndex: 10, top: "5%", left: "5%" },
-    { tag: "CODE SESSIONS", label: "深夜代码", rotation: 6, zIndex: 20, top: "12%", left: "30%" },
-    { tag: "CREATIVE SPARK", label: "灵感草图", rotation: -4, zIndex: 15, top: "45%", left: "8%" },
+    { tag: "Youthful spirit", label: "山顶俯瞰", rotation: -8, zIndex: 10, top: "5%", left: "5%" },
+    { tag: "Office day", label: "深夜代码", rotation: 6, zIndex: 20, top: "12%", left: "30%" },
+    { tag: "Honor moment", label: "灵感草图", rotation: -4, zIndex: 15, top: "45%", left: "8%" },
     { tag: "MOMENT OF CALM", label: "午后咖啡", rotation: 10, zIndex: 25, top: "38%", left: "35%" },
     { 
-      tag: "VISIONARY ENGINEER // 数据分析", 
+      tag: "Natural beauty", 
       label: "数据分析/原型", 
       desc: "利用 SQL 挖掘数据背后的故事",
-      tagColor: "bg-neon-yellow",
+      tagColor: "bg-neon-pink",
       rotation: -5, 
       zIndex: 30, 
       top: "8%", 
       left: "60%" 
     },
     { 
-      tag: "ZS MEMORIAL // 个人印记", 
+      tag: "be water", 
       label: "个人Logo/发布会照片", 
       desc: "探索创造，无限可能",
       tagColor: "bg-neon-pink",
@@ -773,7 +847,7 @@ const AboutMe = ({ isDarkMode }: { isDarkMode?: boolean, key?: any }) => {
               : 'bg-white border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]'
           }`}>
             <div className="absolute top-0 right-0 bg-neon-yellow chunky-border px-4 py-1 text-[10px] font-black uppercase">
-              PROFILE_DATA // 01
+              ABOUT  MASON
             </div>
             <h2 className="text-5xl md:text-6xl font-black mb-6 uppercase tracking-tighter leading-none">
               关于我 //<br />
@@ -783,13 +857,13 @@ const AboutMe = ({ isDarkMode }: { isDarkMode?: boolean, key?: any }) => {
             <div className={`space-y-6 text-lg font-bold leading-relaxed ${darkMode ? 'text-slate-200' : 'text-gray-800'}`}>
               <p className={`text-2xl font-black uppercase tracking-widest mb-4 border-b-4 border-neon-cyan inline-block ${darkMode ? 'text-white' : 'text-black'}`}>READ. CREATE. INSPIRE.</p>
               <p>
-                欢迎来到我的数字领地。我是一名深耕于产品逻辑与技术实现的跨界开发者。
+              欢迎来到我vibe coding的个人网站，我是一名AI重度发烧友。
               </p>
               <p>
-                我出生于 2000 年 5 月，在不断演进的互联网浪潮中成长。这种背景让我对数字产品拥有独特的直觉：既追求极致的功能性，也不放弃对美学的实验性探索。
+              我出生于 2004 年 3 月，在牛肉面的故乡长大。我的家庭氛围十分开明，这让我对一切有趣的新事物都充满了好奇心与求知欲，同时也极大的培养了我独立的能力和坚毅的品格。
               </p>
               <p>
-                目前，我专注于将 AI 驱动的底层逻辑与 Y2K 复古未来主义的设计语言相结合，创造出既能解决实际问题，又能触动情感的数字体验。
+              同时，我也是个忠实的户外党，我热爱登山、游泳，也常有去不同城市参加马拉松的计划。“浑身使不完的牛劲”这一块，可以说是非常权威（当然 我并不会锤同事的 哈哈哈）。
               </p>
             </div>
 
@@ -869,7 +943,7 @@ export default function App() {
         
         <main className="flex-grow max-w-7xl mx-auto w-full px-4">
             <AnimatePresence mode="wait">
-              {activeTab === '首页' && <Home key="home" setActiveTab={setActiveTab} />}
+              {activeTab === '首页' && <Home key="home" setActiveTab={setActiveTab} isDarkMode={isDarkMode} />}
               {activeTab === '我的经历' && <Journey key="journey" isDarkMode={isDarkMode} />}
               {activeTab === '生活碎片' && <LifeSplinters key="splinters" isDarkMode={isDarkMode} />}
               {activeTab === '关于我' && <AboutMe key="about" isDarkMode={isDarkMode} />}
