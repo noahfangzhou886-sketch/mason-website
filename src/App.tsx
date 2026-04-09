@@ -373,7 +373,7 @@ const Journey = ({ isDarkMode }: { isDarkMode?: boolean, key?: any }) => {
                   <div className={`text-[10px] font-bold uppercase ${darkMode ? 'text-slate-400' : 'text-gray-500'}`}>RAG\MCP\AGENT SKILLS</div>
                 </div>
                 <div className={`chunky-border p-4 transition-colors group/p ${darkMode ? 'dark-surface-soft border-white hover:bg-neon-cyan hover:text-black' : 'bg-white hover:bg-neon-cyan'}`}>
-                  <div className="font-black text-sm uppercase mb-2">vibe coding 前端开发</div>
+                  <div className="font-black text-sm uppercase mb-2">vibe coding 网页设计</div>
                   <div className="w-full h-1 bg-black mb-2" />
                   <div className={`text-[10px] font-bold uppercase ${darkMode ? 'text-slate-400' : 'text-gray-500'}`}>奇思妙想现实化</div>
                 </div>
