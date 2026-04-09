@@ -348,7 +348,7 @@ const Journey = ({ isDarkMode }: { isDarkMode?: boolean, key?: any }) => {
                 <div className={`chunky-border px-3 py-1 text-xs font-black uppercase ${darkMode ? 'dark-surface-soft border-white' : 'bg-white'}`}>2024.07 - 2024.8</div>
               </div>
               <p className={`font-bold mb-4 ${darkMode ? 'text-slate-200' : 'text-gray-700'}`}>
-              负责文档上传归档、文件报送，物品采买等跨部门协同工作。
+              负责档案数据分析管理，市场合规政策学习，以及物品采买等跨部门协同工作。
               </p>
               <JourneyImageFrame label="[[ABC_平台_原型/功能演示图_IMAGE_PLACEHOLDER]]" glowClass="neon-box-glow-cyan" imageSrc={journeyImages[2]} onClick={() => setSelectedImage(journeyImages[2])} />
             </motion.div>
